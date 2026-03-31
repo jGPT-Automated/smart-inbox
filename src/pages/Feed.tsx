@@ -6,7 +6,6 @@ import FeedCard, { type FeedItem } from "@/components/FeedCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-// Demo data for initial UI
 const DEMO_ITEMS: FeedItem[] = [
   {
     id: "1",
@@ -22,9 +21,9 @@ const DEMO_ITEMS: FeedItem[] = [
     id: "2",
     type: "link",
     title: "The Future of AI-Powered Development",
-    summary: "An in-depth look at how AI is transforming the way we build software, from code generation to automated testing.",
+    summary: "An in-depth look at how AI is transforming the way we build software.",
     source_url: "https://example.com/article",
-    tags: ["ai", "development", "future"],
+    tags: ["ai", "development"],
     group_name: "Articles",
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
   },
@@ -32,7 +31,7 @@ const DEMO_ITEMS: FeedItem[] = [
     id: "3",
     type: "text",
     title: "Meeting notes: Q1 Planning",
-    summary: "Key decisions from the planning session - focus on mobile-first, ship v1 by end of month.",
+    summary: "Key decisions from the planning session.",
     tags: ["notes", "planning"],
     group_name: "Work",
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
@@ -41,7 +40,7 @@ const DEMO_ITEMS: FeedItem[] = [
     id: "4",
     type: "file",
     title: "design-system-v2.pdf",
-    summary: "Updated design system documentation with new color tokens, typography scale, and component specs.",
+    summary: "Updated design system documentation.",
     tags: ["design", "docs"],
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
   },
@@ -51,11 +50,10 @@ export default function Feed() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<string | null>(null);
 
-  // Try to load real data, fall back to demo
   const { data: items, isLoading } = useQuery({
     queryKey: ["feed-items"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("items")
         .select(`
           id, type, title, summary, source_url, created_at, keywords,
@@ -83,10 +81,7 @@ export default function Feed() {
   });
 
   const types = ["link", "github", "text", "file"];
-
-  const filtered = filter
-    ? (items || []).filter((i) => i.type === filter)
-    : items || [];
+  const filtered = filter ? (items || []).filter((i) => i.type === filter) : items || [];
 
   return (
     <div className="min-h-screen bottom-nav-safe">
@@ -95,14 +90,11 @@ export default function Feed() {
         <p className="text-xs text-muted-foreground mt-0.5">Your knowledge stream</p>
       </header>
 
-      {/* Type filters */}
       <div className="flex gap-2 px-4 py-3 overflow-x-auto scrollbar-thin">
         <button
           onClick={() => setFilter(null)}
           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
-            !filter
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            !filter ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
           }`}
         >
           All
@@ -112,9 +104,7 @@ export default function Feed() {
             key={t}
             onClick={() => setFilter(t === filter ? null : t)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium capitalize transition-colors whitespace-nowrap ${
-              filter === t
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              filter === t ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
             }`}
           >
             {t}
@@ -122,31 +112,19 @@ export default function Feed() {
         ))}
       </div>
 
-      {/* Feed */}
       <div className="px-4 space-y-3 pb-4">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-6 h-6 text-primary animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
             <p className="text-muted-foreground text-sm">No items yet</p>
-            <p className="text-muted-foreground/60 text-xs mt-1">
-              Send something to your Telegram bot to get started
-            </p>
+            <p className="text-muted-foreground/60 text-xs mt-1">Send something to your Telegram bot to get started</p>
           </motion.div>
         ) : (
           filtered.map((item, i) => (
-            <FeedCard
-              key={item.id}
-              item={item}
-              index={i}
-              onClick={() => navigate(`/item/${item.id}`)}
-            />
+            <FeedCard key={item.id} item={item} index={i} onClick={() => navigate(`/item/${item.id}`)} />
           ))
         )}
       </div>
