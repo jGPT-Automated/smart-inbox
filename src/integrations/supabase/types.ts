@@ -182,6 +182,33 @@ export type Database = {
         }
         Relationships: []
       }
+      user_credentials: {
+        Row: {
+          created_at: string
+          credential_type: string
+          encrypted_value: string
+          id: string
+          label: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          credential_type?: string
+          encrypted_value?: string
+          id?: string
+          label?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          credential_type?: string
+          encrypted_value?: string
+          id?: string
+          label?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
