@@ -6,7 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import BottomNav from "@/components/BottomNav";
 import Feed from "./pages/Feed";
 import Groups from "./pages/Groups";
-import SearchPage from "./pages/SearchPage";
+import GroupDetail from "./pages/GroupDetail";
+import TagDetail from "./pages/TagDetail";
 import Chat from "./pages/Chat";
 import ItemDetail from "./pages/ItemDetail";
 import SettingsPage from "./pages/SettingsPage";
@@ -23,8 +24,9 @@ const App = () => (
         <div className="max-w-lg mx-auto relative">
           <Routes>
             <Route path="/" element={<Feed />} />
-            <Route path="/groups" element={<Groups />} />
-            <Route path="/search" element={<SearchPage />} />
+            <Route path="/organize" element={<Groups />} />
+            <Route path="/organize/group/:id" element={<GroupDetail />} />
+            <Route path="/organize/tag/:id" element={<TagDetail />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/item/:id" element={<ItemDetail />} />
             <Route path="/settings" element={<SettingsPage />} />
