@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bot, Flame, Zap, Plus, Trash2, Eye, EyeOff, Key } from "lucide-react";
+import { Bot, Flame, Zap, Plus, Trash2, Eye, EyeOff, Key, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -158,6 +158,17 @@ export default function SettingsPage() {
               );
             })
           )}
+        </div>
+
+        <div className="pt-6 border-t border-border/30">
+          <Button
+            variant="outline"
+            className="w-full text-destructive border-destructive/30 hover:bg-destructive/10"
+            onClick={() => supabase.auth.signOut()}
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
         </div>
       </div>
     </div>

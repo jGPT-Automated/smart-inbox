@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import BottomNav from "@/components/BottomNav";
+import AuthGuard from "@/components/AuthGuard";
 import Feed from "./pages/Feed";
 import Groups from "./pages/Groups";
 import GroupDetail from "./pages/GroupDetail";
@@ -21,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AuthGuard>
         <div className="max-w-lg mx-auto relative">
           <Routes>
             <Route path="/" element={<Feed />} />
@@ -34,6 +36,7 @@ const App = () => (
           </Routes>
           <BottomNav />
         </div>
+        </AuthGuard>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
