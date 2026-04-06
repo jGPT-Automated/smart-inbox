@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Bot, Flame, Zap, Plus, Trash2, Eye, EyeOff, Key, LogOut } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
