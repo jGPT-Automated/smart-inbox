@@ -108,6 +108,7 @@ export type Database = {
           id: string
           keywords: string[] | null
           raw_content: string | null
+          skill_md: string | null
           source_url: string | null
           summary: string | null
           telegram_chat_id: number | null
@@ -122,6 +123,7 @@ export type Database = {
           id?: string
           keywords?: string[] | null
           raw_content?: string | null
+          skill_md?: string | null
           source_url?: string | null
           summary?: string | null
           telegram_chat_id?: number | null
@@ -136,6 +138,7 @@ export type Database = {
           id?: string
           keywords?: string[] | null
           raw_content?: string | null
+          skill_md?: string | null
           source_url?: string | null
           summary?: string | null
           telegram_chat_id?: number | null
